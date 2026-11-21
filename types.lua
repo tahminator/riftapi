@@ -17,9 +17,10 @@
 
 ---@class RiftWorkspace
 ---@field index       integer       0-based index
----@field id          integer|nil
+---@field id          string|nil
 ---@field name        string|nil
 ---@field is_active   boolean
+---@field is_focused  boolean
 ---@field layout_mode string|nil
 ---@field windows     RiftWindow[]|nil
 
@@ -33,7 +34,7 @@
 ---@class RiftApplication
 ---@field name      string
 ---@field bundle_id string|nil
----@field is_active boolean
+---@field is_frontmost boolean
 
 ---@class RiftLayoutState
 ---@field mode      string

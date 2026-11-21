@@ -5,7 +5,7 @@
 add to `sketchybarrc` or wherever you use it:
 
 ```lua
-os.execute("[ ! -d $HOME/.local/share/rift.lua/ ] && (git clone https://github.com/acsandmann/rift.lua.git /tmp/rift.lua && cd /tmp/rift.lua/ && make install && rm -rf /tmp/rift.lua/)")
+os.execute("[ ! -d $HOME/.local/share/rift.lua/ ] && (git clone https://github.com/tahminator/rift.lua.git /tmp/rift.lua && cd /tmp/rift.lua/ && make install && rm -rf /tmp/rift.lua/)")
 
 package.cpath = package.cpath .. ";" .. os.getenv("HOME") .. "/.local/share/rift.lua/?.so"
 ```
