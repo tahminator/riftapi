@@ -56,15 +56,12 @@ function M.request(json_payload, await)
 end
 
 ---send an `execute_command` request
----@param command string must be a json-serialized RiftCommand string.
----@param args? string[]
+---@param command string RiftCommand JSON object, e.g. `{"layout":{"switch_to_workspace":3}}`;
+---unit commands are bare strings, e.g. `{"layout":"create_workspace"}`.
 ---@return boolean|nil
 ---@return string|nil
-function M.execute(command, args)
-    local p = string.format(
-        '{"execute_command":{"command":%s,"args":%s}}',
-        M._json_str(command), M._json_arr(args or {})
-    )
+function M.execute(command)
+    local p = string.format('{"execute_command":{"command":%s}}', command)
     local data, err = M.request(p)
     if not data then return nil, err end
     return true

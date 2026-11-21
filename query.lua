@@ -19,7 +19,7 @@ end
 ---@return RiftDisplay[]|nil
 ---@return string|nil
 function M.query.displays()
-    return M.request('{"get_displays":{}}')
+    return M.request('"get_displays"')
 end
 
 ---@param window_id string e.g. `WindowId { pid: 123, idx: 456 }`
@@ -53,17 +53,17 @@ end
 ---@return RiftApplication[]|nil
 ---@return string|nil
 function M.query.applications()
-    return M.request('{"get_applications":{}}')
+    return M.request('"get_applications"')
 end
 
 ---@return RiftMetrics|nil
 ---@return string|nil
 function M.query.metrics()
-    return M.request('{"get_metrics":{}}')
+    return M.request('"get_metrics"')
 end
 
 ---@return RiftConfig|nil
 ---@return string|nil
 function M.query.config()
-    return M.request('{"get_config":{}}')
+    return M.request('"get_config"')
 end

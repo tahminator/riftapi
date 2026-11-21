@@ -3,58 +3,60 @@ M.window = {}
 ---@return boolean|nil
 ---@return string|nil
 function M.window.next()
-    return M.execute('{"reactor":{"layout":{"next_window":{}}}}')
+    return M.execute('{"layout":"next_window"}')
 end
 
 ---@return boolean|nil
 ---@return string|nil
 function M.window.prev()
-    return M.execute('{"reactor":{"layout":{"prev_window":{}}}}')
+    return M.execute('{"layout":"prev_window"}')
 end
 
 ---@param direction "left"|"right"|"up"|"down"
 ---@return boolean|nil
 ---@return string|nil
 function M.window.focus(direction)
-    local cmd = string.format('{"reactor":{"layout":{"move_focus":%s}}}', M._json_str(direction))
+    local cmd = string.format('{"layout":{"move_focus":%s}}', M._json_str(direction))
     return M.execute(cmd)
 end
 
 ---@return boolean|nil
 ---@return string|nil
 function M.window.toggle_float()
-    return M.execute('{"reactor":{"layout":{"toggle_window_floating":{}}}}')
+    return M.execute('{"layout":"toggle_window_floating"}')
 end
 
 ---@return boolean|nil
 ---@return string|nil
 function M.window.toggle_fullscreen()
-    return M.execute('{"reactor":{"layout":{"toggle_fullscreen":{}}}}')
+    return M.execute('{"layout":"toggle_fullscreen"}')
 end
 
 ---@return boolean|nil
 ---@return string|nil
 function M.window.toggle_fullscreen_within_gaps()
-    return M.execute('{"reactor":{"layout":{"toggle_fullscreen_within_gaps":{}}}}')
+    return M.execute('{"layout":"toggle_fullscreen_within_gaps"}')
 end
 
+---@param orientation? "horizontal"|"vertical"|"smart" defaults to "horizontal"
 ---@return boolean|nil
 ---@return string|nil
-function M.window.resize_grow()
-    return M.execute('{"reactor":{"layout":{"resize_window_grow":{}}}}')
+function M.window.resize_grow(orientation)
+    return M.execute(string.format('{"layout":{"resize_window_grow":%s}}', M._json_str(orientation or "horizontal")))
 end
 
+---@param orientation? "horizontal"|"vertical"|"smart" defaults to "horizontal"
 ---@return boolean|nil
 ---@return string|nil
-function M.window.resize_shrink()
-    return M.execute('{"reactor":{"layout":{"resize_window_shrink":{}}}}')
+function M.window.resize_shrink(orientation)
+    return M.execute(string.format('{"layout":{"resize_window_shrink":%s}}', M._json_str(orientation or "horizontal")))
 end
 
 ---@param amount number positive = grow, negative = shrink (fraction of current size)
 ---@return boolean|nil
 ---@return string|nil
 function M.window.resize_by(amount)
-    local cmd = string.format('{"reactor":{"layout":{"resize_window_by":{"amount":%.6f}}}}', amount)
+    local cmd = string.format('{"layout":{"resize_window_by":{"amount":%.6f}}}', amount)
     return M.execute(cmd)
 end
 
@@ -62,8 +64,8 @@ end
 ---@return boolean|nil
 ---@return string|nil
 function M.window.close(window_id)
-    local wsid = window_id:match("^0x") and window_id or tonumber(window_id)
-    local val = type(wsid) == "number" and tostring(wsid) or M._json_str(wsid)
-    local cmd = string.format('{"reactor":{"reactor":{"close_window":{"window_server_id":%s}}}}', val)
+    local wsid = tonumber(window_id)
+    if not wsid then return nil, "window.close requires a numeric or hex window server id" end
+    local cmd = string.format('{"reactor":{"close_window":{"window_server_id":%d}}}', wsid)
     return M.execute(cmd)
 end

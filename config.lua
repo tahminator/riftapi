@@ -10,17 +10,17 @@ function M.config.set(key, value_json)
         '{"config":{"set":{"key":%s,"value":%s}}}',
         M._json_str(key), value_json
     )
-    return M.execute(cmd, { "__apply_config__", cmd })
+    return M.execute(cmd)
 end
 
 ---@return boolean|nil
 ---@return string|nil
 function M.config.save()
-    return M.execute('{"config":{"save_config":{}}}')
+    return M.execute('{"config":"save_config"}')
 end
 
 ---@return boolean|nil
 ---@return string|nil
 function M.config.reload()
-    return M.execute('{"config":{"reload_config":{}}}')
+    return M.execute('{"config":"reload_config"}')
 end
